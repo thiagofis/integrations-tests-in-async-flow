@@ -5,12 +5,21 @@ namespace Audit
 {
     internal class Program
     {
+        private const string path = "C:/target";
+         
         private static void Main(string[] args)
         {
             Timer timer = new Timer();
-            timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            timer.Interval = TimeSpan.FromSeconds(2).TotalMilliseconds;
+
+            ElapsedEventHandler handler = new ElapsedEventHandler(OnTimedEvent);
+            timer.Elapsed += handler;
+            timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds;
             timer.Enabled = true;
+            timer.Start();
+
+
+            //trigger manually the first time
+            OnTimedEvent(null, null);
 
             Console.WriteLine("Press any key to quit the program.");
             Console.Read();
@@ -19,7 +28,7 @@ namespace Audit
         private static void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             var service = new AuditService();
-            service.AuditFolderAsync("C:/target");
+            service.AuditFolderAsync(path);
         }
     }
 }

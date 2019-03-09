@@ -13,7 +13,7 @@ namespace Audit
             var numberOfFiles = namesOfFiles.Length;
 
             List<string> auditTextLines = new List<string>();
-            auditTextLines.Add($"This directory has {numberOfFiles} file(s).");
+            auditTextLines.Add($"** This directory has {numberOfFiles} file(s). **");
             auditTextLines.AddRange(namesOfFiles.Select(file => $"-> {file}").ToList());
 
             return File.WriteAllLinesAsync($"{path}/audit-summary.txt", auditTextLines);
